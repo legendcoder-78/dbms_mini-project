@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Post - InsightBlog{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 2rem auto;">
+    <div class="post-card">
+        <h1 style="margin-bottom: 2rem; border-bottom: 2px solid var(--bg-color); padding-bottom: 1rem;">
+            <i class="fas fa-pen-nib" style="color: var(--primary-color);"></i> Share a New Insight
+        </h1>
+        <form method="POST">
+            <div style="margin-bottom: 1.5rem;">
+                <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Insight Title</label>
+                <input type="text" id="title" name="title" required placeholder="Enter a descriptive title..." style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label for="content" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Detailed Content</label>
+                <textarea id="content" name="content" rows="12" required placeholder="What technical knowledge would you like to share today?" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <label for="tags" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Tags (comma-separated)</label>
+                <div style="position: relative;">
+                    <i class="fas fa-tags" style="position: absolute; left: 12px; top: 16px; color: var(--secondary-color);"></i>
+                    <input type="text" id="tags" name="tags" placeholder="e.g. flask, mysql, optimization" style="width: 100%; padding: 0.85rem 0.85rem 0.85rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
+                </div>
+                <small style="color: var(--secondary-color); margin-top: 0.5rem; display: block;">Separate tags with commas to help others find your insight.</small>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn-primary" style="flex: 2;">Publish Insight</button>
+                <a href="{{ url_for('index') }}" style="flex: 1; text-align: center; padding: 0.75rem; color: var(--secondary-color); text-decoration: none; border: 1px solid var(--border-color); border-radius: 8px; font-weight: 500;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

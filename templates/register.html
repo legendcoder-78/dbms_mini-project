@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - InsightBlog{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 4rem auto;">
+    <div class="post-card">
+        <h1 style="margin-bottom: 1.5rem; text-align: center;"><i class="fas fa-user-plus" style="color: var(--primary-color);"></i> Create Account</h1>
+        <form method="POST">
+            <div style="margin-bottom: 1.25rem;">
+                <label for="username" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Username</label>
+                <input type="text" id="username" name="username" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none;">
+            </div>
+            <div style="margin-bottom: 1.25rem;">
+                <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email Address</label>
+                <input type="email" id="email" name="email" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none;">
+            </div>
+            <div style="margin-bottom: 2rem;">
+                <label for="password" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Password</label>
+                <input type="password" id="password" name="password" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none;">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Register</button>
+        </form>
+        <p style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--secondary-color);">
+            Already have an account? <a href="{{ url_for('login') }}" style="color: var(--primary-color); font-weight: 600;">Login here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
