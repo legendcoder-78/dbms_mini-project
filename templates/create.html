@@ -11,19 +11,19 @@
         <form method="POST">
             <div style="margin-bottom: 1.5rem;">
                 <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Insight Title</label>
-                <input type="text" id="title" name="title" required placeholder="Enter a descriptive title..." style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
+                <input type="text" id="title" name="title" required placeholder="Enter a descriptive title..." value="{{ title if title else '' }}" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
             </div>
             
             <div style="margin-bottom: 1.5rem;">
                 <label for="content" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Detailed Content</label>
-                <textarea id="content" name="content" rows="12" required placeholder="What technical knowledge would you like to share today?" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+                <textarea id="content" name="content" rows="12" required placeholder="What technical knowledge would you like to share today?" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; resize: vertical;">{{ content if content else '' }}</textarea>
             </div>
             
             <div style="margin-bottom: 2rem;">
                 <label for="tags" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Tags (comma-separated)</label>
                 <div style="position: relative;">
                     <i class="fas fa-tags" style="position: absolute; left: 12px; top: 16px; color: var(--secondary-color);"></i>
-                    <input type="text" id="tags" name="tags" placeholder="e.g. flask, mysql, optimization" style="width: 100%; padding: 0.85rem 0.85rem 0.85rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
+                    <input type="text" id="tags" name="tags" placeholder="e.g. flask, mysql, optimization" value="{{ tags if tags else '' }}" style="width: 100%; padding: 0.85rem 0.85rem 0.85rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit;">
                 </div>
                 <small style="color: var(--secondary-color); margin-top: 0.5rem; display: block;">Separate tags with commas to help others find your insight.</small>
             </div>

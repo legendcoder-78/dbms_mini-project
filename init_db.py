@@ -27,6 +27,16 @@ def init_db():
             )
         """)
 
+        # Create Blacklist table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS Blacklist (
+                bad_word VARCHAR(50) PRIMARY KEY
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """)
+
+        # Seed Blacklist with sample rows
+        cursor.execute("INSERT IGNORE INTO Blacklist (bad_word) VALUES ('spamword1'), ('spamword2')")
+
         # Create Posts table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Posts (
@@ -48,6 +58,24 @@ def init_db():
             BEFORE UPDATE ON Posts
             FOR EACH ROW
             SET NEW.LastModified = CURRENT_TIMESTAMP;
+        """)
+
+        # Create Trigger for Content Validation (Dynamic Blacklist)
+        cursor.execute("DROP TRIGGER IF EXISTS validate_post_content")
+        cursor.execute("""
+            CREATE TRIGGER validate_post_content
+            BEFORE INSERT ON Posts
+            FOR EACH ROW
+            BEGIN
+                IF EXISTS (
+                    SELECT 1 FROM Blacklist 
+                    WHERE NEW.title LIKE CONCAT('%', bad_word, '%') 
+                       OR NEW.content LIKE CONCAT('%', bad_word, '%')
+                ) THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'Content violation: Vulgar language detected.';
+                END IF;
+            END;
         """)
 
         # Create Tags table

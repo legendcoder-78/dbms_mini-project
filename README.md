@@ -55,7 +55,7 @@ The system executes several complex queries to manage data:
     Ensure your local MySQL server is running (e.g., `brew services start mysql`).
 
 2.  **Configuration**:
-    Update the `.env` file with your `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DB`.
+    Update the `.env` file wi th your `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DB`.
 
 3.  **Initialize Environment**:
     ```bash

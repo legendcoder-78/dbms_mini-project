@@ -176,27 +176,36 @@ def create_post():
         
         db = get_db_connection()
         cur = db.cursor()
-        cur.execute("INSERT INTO Posts (title, content, user_id) VALUES (%s, %s, %s)", (title, content, user_id))
-        post_id = db.insert_id()
-        
-        if tags_raw:
-            tags = [t.strip() for t in tags_raw.split(',') if t.strip()]
-            for tag_name in tags:
-                cur.execute("SELECT id FROM Tags WHERE name = %s", (tag_name,))
-                tag_result = cur.fetchone()
-                
-                if tag_result:
-                    tag_id = tag_result['id']
-                else:
-                    cur.execute("INSERT INTO Tags (name) VALUES (%s)", (tag_name,))
-                    tag_id = db.insert_id()
-                
-                cur.execute("INSERT INTO Post_Tags (post_id, tag_id) VALUES (%s, %s)", (post_id, tag_id))
-        
-        db.commit()
-        cur.close()
-        db.close()
-        return redirect(url_for('index'))
+        try:
+            cur.execute("INSERT INTO Posts (title, content, user_id) VALUES (%s, %s, %s)", (title, content, user_id))
+            post_id = db.insert_id()
+            
+            if tags_raw:
+                tags = [t.strip() for t in tags_raw.split(',') if t.strip()]
+                for tag_name in tags:
+                    cur.execute("SELECT id FROM Tags WHERE name = %s", (tag_name,))
+                    tag_result = cur.fetchone()
+                    
+                    if tag_result:
+                        tag_id = tag_result['id']
+                    else:
+                        cur.execute("INSERT INTO Tags (name) VALUES (%s)", (tag_name,))
+                        tag_id = db.insert_id()
+                    
+                    cur.execute("INSERT INTO Post_Tags (post_id, tag_id) VALUES (%s, %s)", (post_id, tag_id))
+            
+            db.commit()
+            return redirect(url_for('index'))
+        except pymysql.MySQLError as e:
+            db.rollback()
+            if 'Content violation' in str(e):
+                flash("Error: Inappropriate content detected. Your post was blocked by the system core safety policy.", 'danger')
+            else:
+                flash(f"Database error: {e}", 'danger')
+            return render_template('create.html', title=title, content=content, tags=tags_raw)
+        finally:
+            cur.close()
+            db.close()
     
     return render_template('create.html')
 
